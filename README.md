@@ -93,10 +93,10 @@ curl -X POST -H "Content-Type: application/json" -d '
 │   └── domain           
 │      ├── entities      сущности
 │      ├── services      поведение сущностей
-│      └── usecases      бизрнес-логика
+│      └── usecases      бизнес-логика
 ├── pkg               
-│   └── client           клиент базы данных (PostgreSQL)
+│   └── client           клиент БД (PostgreSQL)
 ├── .env                 переменные среды
 ├── config.yml           конфигурационный файл
-└── database.sql         скрипты для создания базы данных
+└── database.sql         скрипты для создания БД
 ```
