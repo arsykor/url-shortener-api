@@ -79,3 +79,24 @@ curl -X POST -H "Content-Type: application/json" -d '
     "message": "the link for URL https://job.ozon.ru/fintech/ already exists, try using ID = vgzJmQi5K5"
 }
 ```
+
+## Структура проекта
+ 
+```
+.
+├── cmd                  main функция приложения
+├── internal             
+│   ├── adapters         преобразование данных в удобный формат для use cases и сущностей
+│   ├── composites       сгруппированные в древовидную структуру множества объектов
+│   ├── config           конфигурация
+│   ├── controllers      контроллеры
+│   └── domain           
+│      ├── entities      сущности
+│      ├── services      поведение сущностей
+│      └── usecases      бизрнес-логика
+├── pkg               
+│   └── client           клиент базы данных (PostgreSQL)
+├── .env                 переменные среды
+├── config.yml           конфигурационный файл
+└── database.sql         скрипты для создания базы данных
+```
