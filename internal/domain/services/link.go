@@ -1,0 +1,36 @@
+package services
+
+import (
+	"url-shortener-api/internal/domain/entities"
+)
+
+type Storage interface {
+	GetOne(id string) (*entities.Link, error)
+	Create(URL string, linkId string) (*entities.Link, error)
+}
+
+type linkService struct {
+	storage Storage
+}
+
+func NewService(storage Storage) *linkService {
+	return &linkService{storage: storage}
+}
+
+func (s *linkService) Create(URL string, linkId string) (*entities.Link, error) {
+	link, err := s.storage.Create(URL, linkId)
+	if err != nil {
+		return nil, err
+	}
+
+	return link, nil
+}
+
+func (s *linkService) GetById(id string) (*entities.Link, error) {
+	link, err := s.storage.GetOne(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return link, nil
+}
