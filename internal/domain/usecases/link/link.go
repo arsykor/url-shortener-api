@@ -1,6 +1,7 @@
 package link
 
 import (
+	"context"
 	"crypto/rand"
 	"errors"
 	"fmt"
@@ -19,8 +20,8 @@ const (
 )
 
 type Service interface {
-	GetById(id string) (*entities.Link, error)
-	Create(URL string, linkId string) (*entities.Link, error)
+	GetById(ctx context.Context, id string) (*entities.Link, error)
+	Create(ctx context.Context, URL string, linkId string) (*entities.Link, error)
 }
 
 type linkUseCase struct {
@@ -32,8 +33,8 @@ func NewLinkUseCase(service Service, address string) *linkUseCase {
 	return &linkUseCase{service: service, address: address}
 }
 
-func (l *linkUseCase) GetURLById(id string) (string, error) {
-	link, err := l.service.GetById(id)
+func (l *linkUseCase) GetURLById(ctx context.Context, id string) (string, error) {
+	link, err := l.service.GetById(ctx, id)
 	if err != nil {
 		return "", err
 	}
@@ -41,7 +42,7 @@ func (l *linkUseCase) GetURLById(id string) (string, error) {
 	return link.URL, nil
 }
 
-func (l *linkUseCase) CreateLink(URL string) (string, error) {
+func (l *linkUseCase) CreateLink(ctx context.Context, URL string) (string, error) {
 	const maxAttempts = 3
 
 	for i := 0; i < maxAttempts; i++ {
@@ -50,7 +51,7 @@ func (l *linkUseCase) CreateLink(URL string) (string, error) {
 			return "", err
 		}
 
-		link, err := l.service.Create(URL, linkId)
+		link, err := l.service.Create(ctx, URL, linkId)
 		if err != nil {
 			if err.Error() == errLinkIdExists {
 				continue

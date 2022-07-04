@@ -1,6 +1,7 @@
 package http
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -21,8 +22,8 @@ const (
 )
 
 type UseCase interface {
-	GetURLById(id string) (string, error)
-	CreateLink(URL string) (string, error)
+	GetURLById(ctx context.Context, id string) (string, error)
+	CreateLink(ctx context.Context, URL string) (string, error)
 }
 
 type linkHandler struct {
@@ -73,7 +74,7 @@ func (h *linkHandler) CreateLink(ctx *gin.Context) {
 		return
 	}
 
-	linkOut, err := h.linkUseCase.CreateLink(Link[0].URL)
+	linkOut, err := h.linkUseCase.CreateLink(ctx, Link[0].URL)
 	if err != nil {
 		returnError(ctx, err)
 		return
@@ -85,7 +86,7 @@ func (h *linkHandler) CreateLink(ctx *gin.Context) {
 func (h *linkHandler) GetURLById(ctx *gin.Context) {
 	id := ctx.Param("id")
 
-	link, err := h.linkUseCase.GetURLById(id)
+	link, err := h.linkUseCase.GetURLById(ctx, id)
 	if err != nil {
 		returnError(ctx, err)
 		return

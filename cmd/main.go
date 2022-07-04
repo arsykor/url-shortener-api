@@ -26,7 +26,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	postgresqlClient, err := postgresql.NewClient(context.Background(), 5, conf)
+	postgresqlClient, err := postgresql.NewClient(context.TODO(), 5, conf)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func main() {
 	var linkComposite *composites.LinkComposite
 
 	switch *storage {
-	case "mi":
+	case "im":
 		linkComposite = composites.NewLinkCompositeInMemory(addr)
 	case "db":
 		linkComposite = composites.NewLinkCompositePostgres(postgresqlClient, addr)

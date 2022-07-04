@@ -30,15 +30,14 @@ func NewStoragePostgres(postgresqlClient postgresql.Client) services.Storage {
 	return &linkStoragePostgres{client: postgresqlClient}
 }
 
-func (ts *linkStoragePostgres) Create(URL string, linkId string) (*entities.Link, error) {
-	//var fnCode int
+func (ts *linkStoragePostgres) Create(ctx context.Context, URL string, linkId string) (*entities.Link, error) {
 	type responseDB struct {
 		fnCode int
 		linkId string
 	}
 	respDB := responseDB{}
 
-	err := ts.client.QueryRow(context.TODO(), callFNCreateLink, URL, linkId).Scan(&respDB.fnCode, &respDB.linkId)
+	err := ts.client.QueryRow(ctx, callFNCreateLink, URL, linkId).Scan(&respDB.fnCode, &respDB.linkId)
 	if err != nil {
 		return nil, err
 	}
@@ -57,9 +56,9 @@ func (ts *linkStoragePostgres) Create(URL string, linkId string) (*entities.Link
 	return nil, errors.New(fmt.Sprintf(errUnexpectedCode))
 }
 
-func (ts *linkStoragePostgres) GetOne(id string) (*entities.Link, error) {
+func (ts *linkStoragePostgres) GetOne(ctx context.Context, id string) (*entities.Link, error) {
 	var link entities.Link
-	err := ts.client.QueryRow(context.TODO(), selectURL, id).Scan(&link.URL)
+	err := ts.client.QueryRow(ctx, selectURL, id).Scan(&link.URL)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, errors.New(fmt.Sprintf(errNoLinkInDB))

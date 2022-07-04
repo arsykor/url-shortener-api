@@ -1,6 +1,7 @@
 package in_memory
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"sync"
@@ -25,7 +26,7 @@ func NewStorageInMemory() services.Storage {
 	return &linkStorageInMemory{mapLinkToURL: make(map[string]string), mapURLToLink: make(map[string]string)}
 }
 
-func (s *linkStorageInMemory) Create(URL string, linkId string) (*entities.Link, error) {
+func (s *linkStorageInMemory) Create(ctx context.Context, URL string, linkId string) (*entities.Link, error) {
 	ch := make(chan error)
 
 	go s.createLink(ch, URL, linkId)
@@ -62,14 +63,11 @@ func (s *linkStorageInMemory) createLink(ch chan error, URL string, linkId strin
 		Id:  linkId,
 		URL: URL,
 	})
-	for _, item := range s.arrLinks {
-		fmt.Println(item)
-	}
 
 	close(ch)
 }
 
-func (s *linkStorageInMemory) GetOne(id string) (*entities.Link, error) {
+func (s *linkStorageInMemory) GetOne(ctx context.Context, id string) (*entities.Link, error) {
 	v, ok := s.mapLinkToURL[id]
 	if !ok {
 		return nil, errors.New(errNoLinkInDB)
