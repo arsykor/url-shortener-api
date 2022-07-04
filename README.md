@@ -106,7 +106,7 @@ curl -X POST -H "Content-Type: application/json" -d '
 │      └── usecases      бизнес-логика
 ├── pkg               
 │   └── client           клиент БД (PostgreSQL)
-├── .env                 переменные среды
+├── .env                 переменные окружения
 ├── config.yml           конфигурационный файл
 └── database.sql         скрипты для создания БД
 ```
