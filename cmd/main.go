@@ -26,10 +26,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	postgresqlClient, err := postgresql.NewClient(context.TODO(), 5, conf)
-	if err != nil {
-		log.Fatal(err)
-	}
 	addr := fmt.Sprintf("%s:%s", conf.Server.Host, conf.Server.Port)
 
 	var linkComposite *composites.LinkComposite
@@ -38,6 +34,10 @@ func main() {
 	case "im":
 		linkComposite = composites.NewLinkCompositeInMemory(addr)
 	case "db":
+		postgresqlClient, err := postgresql.NewClient(context.TODO(), 5, conf)
+		if err != nil {
+			log.Fatal(err)
+		}
 		linkComposite = composites.NewLinkCompositePostgres(postgresqlClient, addr)
 	}
 
