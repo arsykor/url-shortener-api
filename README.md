@@ -7,7 +7,7 @@
  
 Хранилище -  PostgreSQL или in-memory.
 
-**`https://job.ozon.ru/vacancy/?department=Ozon%20Fintech&query=Go`** `--->` **`yourdomain/52h36xlppR`**
+**`https://go.dev/tour/concurrency/1`** `--->` **`yourdomain/52h36xlppR`**
 
 ## Начало работы
 **1. Клонирование репозитория GitHub:**
@@ -58,7 +58,7 @@ go run ./... --storage db
 curl -X POST -H "Content-Type: application/json" -d '
 [
   {
-    "url": "https://job.ozon.ru/fintech/"
+    "url": "https://go.dev/tour/concurrency/1"
   }
 ]
 ' http://localhost:8080
@@ -83,7 +83,7 @@ curl -X POST -H "Content-Type: application/json" -d '
 ```json
 {
     "code": 400,
-    "message": "the link for URL https://job.ozon.ru/fintech/ already exists, try using ID = vgzJmQi5K5"
+    "message": "the link for URL https://go.dev/tour/concurrency/1 already exists, try using ID = vgzJmQi5K5"
 }
 ```
 
